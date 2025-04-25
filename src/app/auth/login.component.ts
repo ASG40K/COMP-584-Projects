@@ -4,6 +4,7 @@ import { LoginRequest } from './login-request';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
+import { AuthService } from './auth.service';
 @Component({
   selector: 'app-login',
   imports: [
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit{
 
 
 
-      constructor(){
+      constructor(private authService: AuthService){
 
       }
   ngOnInit(): void {
@@ -36,5 +37,17 @@ export class LoginComponent implements OnInit{
       UserName: this.form.controls['userName'].value,
       password: this.form.controls['password'].value
     };
+
+    this.authService.login(loginRequest).subscribe({
+      next:  result => {
+        console.log(result);
+        if(result.success){
+          localStorage.setItem("565-jwt", result.token);
+        }
+      },
+      error: error =>  console.error(error)
+    }
+    
+    )
     }
 }
