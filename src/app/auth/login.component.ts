@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoginRequest } from './login-request';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
 import { AuthService } from './auth.service';
 @Component({
@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
 
 
 
-      constructor(private authService: AuthService){
+      constructor(private authService: AuthService, private router: Router){
 
       }
   ngOnInit(): void {
@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit{
       next:  result => {
         console.log(result);
         if(result.success){
-          localStorage.setItem("565-jwt", result.token);
+          
+          this.router.navigate(["/"]);
         }
       },
       error: error =>  console.error(error)
