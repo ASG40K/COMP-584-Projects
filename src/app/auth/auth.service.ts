@@ -30,8 +30,13 @@ private setAuthStatus (value: boolean){
   }
 
 logout(){
-
+     localStorage.removeItem("565-jwt");
+     this.setAuthStatus(false);
 }
 
+isAuthenticated(): boolean {
+return localStorage.getItem("565-jwt") != null;
+
+}
 
 }
